@@ -16,8 +16,19 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "extension.changeCase",
+				"title": "Change the word case"
+			},
+			{
+				"command": "extension.setKeyCode",
+				"title": "Set the cases enabled to switch"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "extension.changeCase",
+				"key": "alt+q",
+				"mac": "ctrl+cmd+c"
 			}
 		]
 	},
