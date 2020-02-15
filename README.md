@@ -1,65 +1,37 @@
-# change-case README
+# Change Case README
 
-This is the README for your extension "change-case". After writing up a brief description, we recommend including the following sections.
+Quickly change the case with one keybinding
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Switch cases in "camelCase", "PascalCase" and "CONSTANT_CASE" with alt + q (windows) / ctrl + cmd+ c (mac).
 
-For example if there is an image subfolder under your extension project workspace:
+![feature_1](images/feature1.gif)
 
-\!\[feature X\]\(images/feature-x.png\)
+You can also switch to "snake_case" and "kebab-case" if you like. You need set the key code by "ctrl + shift + P" and use the "Set Key Code" command.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![feature_2](images/feature2.gif)
 
-## Requirements
+All supported cases are below:
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+| code | cases |
+| -- | -- |
+| 0 | camelCase |
+| 1 | PascalCase |
+| 2 | CONSTANT_CASE |
+| 3 | snake_case |
+| 4 | kebab-case |
 
-## Extension Settings
+For example, if you set key code to `0234`. The action will be as below:
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+| operation | times | action |
+| -- | -- | -- |
+| alt + q | first | to camelCase |
+| alt + q | second | to CONSTANT_CASE |
+| alt + q | third | to snake_case |
+| alt + q | forth | to kebab-case |
+| alt + q | fifth | to camelCase (again) |
 
-For example:
+## Make this extension better
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+You can pull request on github. Welcome!
