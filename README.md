@@ -6,11 +6,13 @@ Quickly change the case with one keybinding
 
 Switch cases in "camelCase", "PascalCase" and "CONSTANT_CASE" with alt + q (windows) / ctrl + cmd+ c (mac).
 
-![feature_1](images/feature1.gif)
+![feature_1_1](https://github.com/finntenzor/change-case/blob/master/images/feature1.png)
+![feature_1_2](https://github.com/finntenzor/change-case/blob/master/images/feature1.gif)
 
 You can also switch to "snake_case" and "kebab-case" if you like. You need set the key code by "ctrl + shift + P" and use the "Set Key Code" command.
 
-![feature_2](images/feature2.gif)
+![feature_2_1](https://github.com/finntenzor/change-case/blob/master/images/feature2.png)
+![feature_2_2](https://github.com/finntenzor/change-case/blob/master/images/feature2.gif)
 
 All supported cases are below:
 
