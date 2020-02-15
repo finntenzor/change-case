@@ -3,6 +3,11 @@
 import * as vscode from 'vscode';
 import change, { validCases } from './change-case';
 
+export interface Store {
+	currentStatus: number;
+	enabledStatus: string[];
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -11,16 +16,11 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "change-case" is now active!');
 
-	interface Store {
-		currentStatus: number;
-		enabledStatus: string[];
-	}
-
 	const store: Store = {
 		// The current case status index
 		currentStatus: 0,
 		// The enabled status string list
-		enabledStatus: []
+		enabledStatus: ['CamelCase', 'PascalCase', 'ConstantCase']
 	};
 
 	const keyCodePattern = /^\d+$/;

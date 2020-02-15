@@ -10,18 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.setKeyCode",
+		"onCommand:extension.changeCase"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "extension.changeCase",
-				"title": "Change the word case"
+				"title": "Change Word Case"
 			},
 			{
 				"command": "extension.setKeyCode",
-				"title": "Set the cases enabled to switch"
+				"title": "Set Key Code"
 			}
 		],
 		"keybindings": [
