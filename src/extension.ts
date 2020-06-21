@@ -51,12 +51,21 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	let changeCaseDisposable = vscode.commands.registerTextEditorCommand('extension.changeCase', (textEditor, edit) => {
 
-		// change all the selections
+                
+                // change all the selections
 		textEditor.selections.forEach(selection => {
 			const originText = textEditor.document.getText(selection);
 			const newText = change(originText, store.enabledStatus[store.currentStatus]);
 			edit.replace(selection, newText);
 		});
+
+                if (textEditor.selection.isEmpty()) {
+                        let wordAtPosition = editor.getModel().getWordAtPosition(selection.getStartPosition());
+			if (wordAtPosition) {
+				const originText =  wordAtPosition.word;
+                                const newText = change(originText, store.enabledStatus[store.currentStatus]);
+                                edit.replace(wordAtPosition, newText)
+			}
 
 		// switch to next status
 		store.currentStatus = (store.currentStatus + 1 ) % store.enabledStatus.length;
