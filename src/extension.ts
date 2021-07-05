@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const keyCodePattern = /^\d+$/;
 
-	let setKeyCodeDisposable = vscode.commands.registerCommand('extension.setKeyCode', () => {
+	let setKeyCodeDisposable = vscode.commands.registerCommand('change-case.setKeyCode', () => {
 		vscode.window.showInputBox({
 			placeHolder: 'example: 012',
 			prompt: '0 = camelCase, 1 = PascalCase, 2 = CONSTANT_CASE, 3 = snake_case, 4 = kebab-case',
@@ -45,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let changeCaseDisposable = vscode.commands.registerTextEditorCommand('extension.changeCase', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
+	let changeCaseDisposable = vscode.commands.registerTextEditorCommand('change-case.changeCase', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
 
         // change all the selections
 		textEditor.selections.forEach(selection => {
