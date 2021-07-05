@@ -7,3 +7,4 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [Unreleased]
 
 - Initial release
+- 2021-07-05 New feature: Change case on current word if no selection. Author: [vvvrrooomm](https://github.com/vvvrrooomm)

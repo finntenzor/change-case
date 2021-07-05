@@ -1,11 +1,17 @@
+// 状态定义
+// State definition
 const CHAR_LOWER = 0;
 const CHAR_UPPER = 1;
 const CHAR_OTHER = 2;
 
+// 行为定义
+// Action definition
 const OPT_SKIP = 0;
 const OPT_APPEND = 1;
 const OPT_NEW = 2;
 
+// 状态机
+// The state machine
 const MOVE_MAP = [
     [OPT_APPEND, OPT_NEW, OPT_SKIP],
     [OPT_APPEND, OPT_APPEND, OPT_SKIP],
@@ -14,6 +20,7 @@ const MOVE_MAP = [
 
 /**
  * 识别一个字符是大写，小写，还是其他
+ * Input one character, identify whether a character is uppercase, lowercase, or otherwise.
  * @param char 字符
  */
 function recognizeChar(char: string): number {
@@ -29,6 +36,7 @@ function recognizeChar(char: string): number {
 
 /**
  * 将输入的标识符转为单词数组
+ * Input an identifier, output all words in the identifier.
  * @param input 输入标识符
  */
 function parseIdentifierToWordArray(input: string): string[] {
@@ -37,6 +45,7 @@ function parseIdentifierToWordArray(input: string): string[] {
     let lastStatus = CHAR_OTHER;
     let currentStatus = CHAR_OTHER;
     // 用一个标准的状态机把输入切割成若干个单词组成的数组
+    // Slice the input into an array of words with a state machine
     for (const c of input) {
         currentStatus = recognizeChar(c);
         const move = MOVE_MAP[lastStatus][currentStatus];
@@ -118,6 +127,7 @@ export function toKebabCase(input: string): string {
 
 /**
  * 所有目前支持的命名风格
+ * All the valid cases
  */
 export const validCases = [
     'CamelCase',
@@ -129,6 +139,7 @@ export const validCases = [
 
 /**
  * 将输入标识符转换为特定命名风格
+ * Input an identifier and target format, output the identifier under target format.
  * @param input 输入标识符
  * @param format 输出格式
  */

@@ -12,10 +12,6 @@ export interface Store {
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "change-case" is now active!');
-
 	const store: Store = {
 		// The current case status index
 		currentStatus: 0,
@@ -49,26 +45,36 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let changeCaseDisposable = vscode.commands.registerTextEditorCommand('extension.changeCase', (textEditor, edit) => {
+	let changeCaseDisposable = vscode.commands.registerTextEditorCommand('extension.changeCase', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
 
-                
-                // change all the selections
+        // change all the selections
 		textEditor.selections.forEach(selection => {
 			const originText = textEditor.document.getText(selection);
 			const newText = change(originText, store.enabledStatus[store.currentStatus]);
 			edit.replace(selection, newText);
 		});
 
-                if (textEditor.selection.isEmpty()) {
-                        let wordAtPosition = editor.getModel().getWordAtPosition(selection.getStartPosition());
-			if (wordAtPosition) {
-				const originText =  wordAtPosition.word;
-                                const newText = change(originText, store.enabledStatus[store.currentStatus]);
-                                edit.replace(wordAtPosition, newText)
-			}
+        // change case of current word if no selection
+        if (textEditor.selection.isEmpty) {
+            const currentCursorPosition: vscode.Position = textEditor.selection.start;
+            const currentWordRange = textEditor.document.getWordRangeAtPosition(currentCursorPosition);
+            if (currentWordRange) {
+                const originText = textEditor.document.getText(currentWordRange);
+                const newText = change(originText, store.enabledStatus[store.currentStatus]);
 
-		// switch to next status
-		store.currentStatus = (store.currentStatus + 1 ) % store.enabledStatus.length;
+                // 虽然不知道为什么 但是直接调用replace没反应
+                // I don't know why this line of code doesn't work. :(
+                // edit.replace(currentWordRange, newText);
+
+                // change the case of current word
+                textEditor.edit(builder => {
+                    builder.replace(currentWordRange, newText);
+                });
+            }
+        }
+
+        // switch to next status
+        store.currentStatus = (store.currentStatus + 1 ) % store.enabledStatus.length;
 	});
 
 	context.subscriptions.push(setKeyCodeDisposable);

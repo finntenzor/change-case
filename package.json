@@ -2,7 +2,7 @@
 	"name": "change-case",
 	"displayName": "Change Case",
 	"description": "Quickly change the case with one keybinding",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.42.0"
 	},
@@ -10,8 +10,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.setKeyCode",
-		"onCommand:extension.changeCase"
+		"onCommandchange-casesetKeyCode",
+		"onCommand:change-case.changeCase"
 	],
 	"publisher": "FinnTenzor",
 	"repository": {
@@ -22,17 +22,17 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.changeCase",
+				"command": "change-case.changeCase",
 				"title": "Change Word Case"
 			},
 			{
-				"command": "extension.setKeyCode",
+				"command": "change-case.setKeyCode",
 				"title": "Set Key Code"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "extension.changeCase",
+				"command": "change-case.changeCase",
 				"key": "alt+q",
 				"mac": "ctrl+cmd+c"
 			}
