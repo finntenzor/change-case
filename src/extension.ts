@@ -2,10 +2,13 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import change, { validCases } from './change-case';
+import { readFile, writeFile } from 'fs';
+import { join as pathJoin } from 'path';
 
 export interface Store {
 	currentStatus: number;
 	enabledStatus: string[];
+    didUserAction: boolean;
 }
 
 // this method is called when your extension is activated
@@ -16,10 +19,38 @@ export function activate(context: vscode.ExtensionContext) {
 		// The current case status index
 		currentStatus: 0,
 		// The enabled status string list
-		enabledStatus: ['CamelCase', 'PascalCase', 'ConstantCase']
+		enabledStatus: ['CamelCase', 'PascalCase', 'ConstantCase'],
+        // Whether the user has actively modified key code
+        didUserAction: false
 	};
 
 	const keyCodePattern = /^\d+$/;
+
+    const keyCodeLocalFilePath = pathJoin(context.extensionPath, 'keycode.txt');
+
+    function setKeyCode(newKeyCode:string) {
+        const codes = newKeyCode.split('');
+        const indexes = codes.map(code => parseInt(code));
+        const newStatusList = indexes.map(index => validCases[index]);
+        store.enabledStatus = newStatusList;
+    }
+
+    function onLoad() {
+        readFile(keyCodeLocalFilePath, (err, data) => {
+            if (err) {
+                // do nothing, leave status default
+                console.log('change-case: keycode storage read error, use default');
+            } else {
+                if (store.didUserAction) {
+                    // do nothing if user change key code before file is loaded
+                } else {
+                    const keyCode = data.toString();
+                    setKeyCode(keyCode);
+                    console.log('change-case: keycode storage read ok. key code:', keyCode);
+                }
+            }
+        });
+    }
 
 	let setKeyCodeDisposable = vscode.commands.registerCommand('change-case.setKeyCode', () => {
 		vscode.window.showInputBox({
@@ -35,10 +66,17 @@ export function activate(context: vscode.ExtensionContext) {
 			if (!keyCode) {
 				return;
 			}
-			const codes = keyCode.split('');
-			const indexes = codes.map(code => parseInt(code));
-			const newStatusList = indexes.map(index => validCases[index]);
-			store.enabledStatus = newStatusList;
+
+            // Record that the user has actively modified keycode
+            store.didUserAction = true;
+
+			setKeyCode(keyCode);
+
+            // Maybe keycode write failed if user close vscode too fast
+            // But this is not common and there is not need to resolve it
+            writeFile(keyCodeLocalFilePath, keyCode, 'utf-8', () => {
+                console.log('change-case: keycode storage write ok');
+            });
 		});
 	});
 
@@ -79,6 +117,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(setKeyCodeDisposable);
 	context.subscriptions.push(changeCaseDisposable);
+
+    onLoad();
 }
 
 // this method is called when your extension is deactivated
