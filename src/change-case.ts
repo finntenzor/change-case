@@ -2,7 +2,8 @@
 // State definition
 const CHAR_LOWER = 0;
 const CHAR_UPPER = 1;
-const CHAR_OTHER = 2;
+const CHAR_DIGIT = 2;
+const CHAR_OTHER = 3;
 
 // 行为定义
 // Action definition
@@ -13,9 +14,10 @@ const OPT_NEW = 2;
 // 状态机
 // The state machine
 const MOVE_MAP = [
-    [OPT_APPEND, OPT_NEW, OPT_SKIP],
-    [OPT_APPEND, OPT_APPEND, OPT_SKIP],
-    [OPT_NEW, OPT_NEW, OPT_SKIP]
+    [OPT_APPEND, OPT_NEW, OPT_APPEND, OPT_SKIP],
+    [OPT_APPEND, OPT_APPEND, OPT_APPEND, OPT_SKIP],
+    [OPT_NEW, OPT_NEW, OPT_APPEND, OPT_SKIP],
+    [OPT_NEW, OPT_NEW, OPT_NEW, OPT_SKIP]
 ];
 
 /**
@@ -29,6 +31,8 @@ function recognizeChar(char: string): number {
         return CHAR_LOWER;
     } else if (char >= 'A' && char <= 'Z') {
         return CHAR_UPPER;
+    } else if (char >= '0' && char <= '9') {
+        return CHAR_DIGIT;
     } else {
         return CHAR_OTHER;
     }
@@ -39,7 +43,7 @@ function recognizeChar(char: string): number {
  * Input an identifier, output all words in the identifier.
  * @param input 输入标识符
  */
-function parseIdentifierToWordArray(input: string): string[] {
+export function parseIdentifierToWordArray(input: string): string[] {
     const result = [];
     let currentWord = '';
     let lastStatus = CHAR_OTHER;
