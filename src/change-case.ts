@@ -13,12 +13,21 @@ const OPT_NEW = 2;
 
 // 状态机
 // The state machine
-const MOVE_MAP = [
+const MOVE_MAP_TYPE_CAMEL_LIKE = [
+    [OPT_APPEND, OPT_NEW, OPT_APPEND, OPT_SKIP],
+    [OPT_APPEND, OPT_NEW, OPT_APPEND, OPT_SKIP],
+    [OPT_NEW, OPT_NEW, OPT_APPEND, OPT_SKIP],
+    [OPT_NEW, OPT_NEW, OPT_NEW, OPT_SKIP]
+];
+const MOVE_MAP_TYPE_SNAKE_LIKE = [
     [OPT_APPEND, OPT_NEW, OPT_APPEND, OPT_SKIP],
     [OPT_APPEND, OPT_APPEND, OPT_APPEND, OPT_SKIP],
     [OPT_NEW, OPT_NEW, OPT_APPEND, OPT_SKIP],
     [OPT_NEW, OPT_NEW, OPT_NEW, OPT_SKIP]
 ];
+
+export const TYPE_CAMEL_LIKE = 0;
+export const TYPE_SNAKE_LIKE = 1;
 
 /**
  * 识别一个字符是大写，小写，还是其他
@@ -39,6 +48,23 @@ function recognizeChar(char: string): number {
 }
 
 /**
+ * 判断一个输入的标识符是否是类似驼峰的
+ * 当输入是大驼峰、小驼峰时，返回0
+ * 当输入是大写下划线、小写下划线、小写中划线时，返回1
+ * returns 0 if input string belongs to camel case, pascal case
+ * returns 1 if input string belongs to constant case, snake case, kebab case
+ * @param input 输入的标识符
+ * @returns
+ */
+export function mainTypeRecognize(input: string): number {
+    if ((input.toUpperCase() !== input) && (input.toLowerCase() !== input)) {
+        return TYPE_CAMEL_LIKE;
+    } else {
+        return TYPE_SNAKE_LIKE;
+    }
+}
+
+/**
  * 将输入的标识符转为单词数组
  * Input an identifier, output all words in the identifier.
  * @param input 输入标识符
@@ -48,11 +74,14 @@ export function parseIdentifierToWordArray(input: string): string[] {
     let currentWord = '';
     let lastStatus = CHAR_OTHER;
     let currentStatus = CHAR_OTHER;
+    // 根据输入的标识符大类来选择一个状态机
+    // Determine which move map is going to use next
+    const moveMap = [MOVE_MAP_TYPE_CAMEL_LIKE, MOVE_MAP_TYPE_SNAKE_LIKE][mainTypeRecognize(input)];
     // 用一个标准的状态机把输入切割成若干个单词组成的数组
     // Slice the input into an array of words with a state machine
     for (const c of input) {
         currentStatus = recognizeChar(c);
-        const move = MOVE_MAP[lastStatus][currentStatus];
+        const move = moveMap[lastStatus][currentStatus];
         switch (move) {
             case OPT_NEW:
                 if (currentWord !== '') {
