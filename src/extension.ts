@@ -94,8 +94,10 @@ export function activate(context: vscode.ExtensionContext) {
 
         // change case of current word if no selection
         if (textEditor.selection.isEmpty) {
+            const previousStatus = store.currentStatus === 0 ? store.enabledStatus.length - 1 : store.currentStatus - 1;
             const currentCursorPosition: vscode.Position = textEditor.selection.start;
-            const currentWordRange = textEditor.document.getWordRangeAtPosition(currentCursorPosition);
+            const regex = store.enabledStatus[previousStatus] === 'KebabCase' ? /[-_$a-zA-Z0-9]+/ : /[_$a-zA-Z0-9]+/;
+            const currentWordRange = textEditor.document.getWordRangeAtPosition(currentCursorPosition, regex);
             if (currentWordRange) {
                 const originText = textEditor.document.getText(currentWordRange);
                 const newText = change(originText, store.enabledStatus[store.currentStatus]);
