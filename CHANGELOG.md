@@ -11,3 +11,4 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - 2021-11-26 New feature: Auto save last "key code" to extension folder.
 - 2022-02-19 New feature: Support variables with digits; New test suite.
 - 2022-03-07 Fix: Using new decompose strategy to support single-letter words.
+- 2023-09-17 New feature: Allow to select words with dashes when changing from kebab-case to something else. Author: [Oleg Sesov](https://github.com/osesov)
