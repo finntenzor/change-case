@@ -9,7 +9,7 @@ Switch cases in "camelCase", "PascalCase" and "CONSTANT_CASE" with alt + q (wind
 ![feature_1_1](./images/feature1.png)
 ![feature_1_2](./images/feature1.gif)
 
-You can also switch to "snake_case" and "kebab-case" if you like. You need set the key code by "ctrl + shift + P" and use the "Set Key Code" command.
+You can also switch to "snake_case" and "kebab-case" if you like. You need set the key code by "cmd + shift + P" and use the "Set Key Code" command.
 
 ![feature_2_1](./images/feature2.png)
 ![feature_2_2](./images/feature2.gif)
